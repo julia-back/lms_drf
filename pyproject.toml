@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "lms-drf"
+version = "0.1.0"
+description = ""
+authors = ["Julia Bengert <yubengert@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.6"
+psycopg2 = "^2.9.10"
+pillow = "^11.1.0"
+
+
+[tool.poetry.group.lint.dependencies]
+flake8 = "^7.1.1"
+black = "^25.1.0"
+isort = "^6.0.0"
+
+[tool.isort]
+line_length = 119
+
+[tool.black]
+line-length = 119
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

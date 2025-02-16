@@ -1,0 +1,20 @@
+[
+{
+    "model": "materials.course",
+    "pk": 2,
+    "fields": {
+        "name": "Курс выживания",
+        "img": "img_course/Без_имени.png",
+        "description": "Выживание для чайников"
+    }
+},
+{
+    "model": "materials.course",
+    "pk": 3,
+    "fields": {
+        "name": "Курс рукоделия",
+        "img": "img_course/Без_имени_OIFbnTo.png",
+        "description": "Шьем, вяжем, вышиваем"
+    }
+}
+]

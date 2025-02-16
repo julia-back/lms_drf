@@ -1,0 +1,68 @@
+[
+{
+    "model": "materials.lesson",
+    "pk": 2,
+    "fields": {
+        "name": "Съедобные ягоды",
+        "img": "img_lesson/Без_имени.png",
+        "description": "Не все ягоды съедобные",
+        "video_link": null,
+        "course": 2
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 3,
+    "fields": {
+        "name": "Как убежать от медведя",
+        "img": "img_lesson/Без_имени_n7lKRD5.png",
+        "description": "Никак",
+        "video_link": null,
+        "course": 2
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 4,
+    "fields": {
+        "name": "Как подружиться с зайцем",
+        "img": "",
+        "description": "Лайфхаки по добыче моркови",
+        "video_link": null,
+        "course": 2
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 5,
+    "fields": {
+        "name": "Вышивание крестиком",
+        "img": "img_lesson/Без_имени_Y3lCN0v.png",
+        "description": "Как сделать ровный крестик",
+        "video_link": null,
+        "course": 3
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 6,
+    "fields": {
+        "name": "Как зашить карман",
+        "img": "",
+        "description": "...",
+        "video_link": null,
+        "course": 3
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 7,
+    "fields": {
+        "name": "Вязание крючком",
+        "img": "img_lesson/Без_имени_vs7V0kI.png",
+        "description": "...",
+        "video_link": null,
+        "course": 3
+    }
+}
+]

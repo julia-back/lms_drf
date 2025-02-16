@@ -8,4 +8,6 @@ app_name = UsersConfig.name
 urlpatterns = [
     path("user_detail/<int:pk>/", views.CustomUserRetrieveAPIView.as_view(), name="user_detail"),
     path("user_update/<int:pk>/", views.CustomUserUpdateAPIview.as_view(), name="user_update"),
+
+    path("payment_list/", views.PaymentListAPIView.as_view(), name="payment_list"),
 ]

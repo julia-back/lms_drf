@@ -7,7 +7,7 @@ from . import views
 app_name = MaterialsConfig.name
 
 router = DefaultRouter()
-router.register("courses", views.CourseViewSet, basename='course')
+router.register("course", views.CourseViewSet, basename='course')
 
 urlpatterns = [
     path("", include(router.urls)),

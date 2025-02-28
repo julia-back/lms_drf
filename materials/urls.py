@@ -1,8 +1,8 @@
-from django.urls import path, include
-from .apps import MaterialsConfig
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from . import views
 
+from . import views
+from .apps import MaterialsConfig
 
 app_name = MaterialsConfig.name
 

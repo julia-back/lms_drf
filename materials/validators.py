@@ -8,8 +8,11 @@ class YoutubeLinkValidator:
 
     def __call__(self, value):
         if self.field is None:
-            if "youtube.com" not in value:
-                raise ValidationError("Поле должно содержать ссылку на youtube.com")
+            if value is not None:
+                if "youtube.com" not in value:
+                    raise ValidationError("Поле должно содержать ссылку на youtube.com")
         else:
-            if "youtube.com" not in value.get(self.field):
-                raise ValidationError("Поле должно содержать ссылку на youtube.com")
+            value = value.get(self.field)
+            if value is not None:
+                if "youtube.com" not in value:
+                    raise ValidationError("Поле должно содержать ссылку на youtube.com")

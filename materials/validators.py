@@ -10,7 +10,6 @@ class YoutubeLinkValidator:
         if self.field is None:
             if "youtube.com" not in value:
                 raise ValidationError("Поле должно содержать ссылку на youtube.com")
-            print(self.field)
         else:
             if "youtube.com" not in value.get(self.field):
                 raise ValidationError("Поле должно содержать ссылку на youtube.com")

@@ -1,12 +1,18 @@
+from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
+from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import generics
+from rest_framework import views
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from materials.models import Course
 
-from .models import CustomUser, Payment
+from .models import CustomUser, Payment, Subscription
 from .permissions import IsCurrentUser
 from .serializers import (CustomUserPrivateSerializer, CustomUserPublicSerializer, CustomUserRegisterSerializer,
-                          PaymentSerializer)
+                          PaymentSerializer, SubscriptionSerializer)
 
 
 class CustomUserRegisterAPIView(generics.CreateAPIView):
@@ -46,3 +52,20 @@ class PaymentListAPIView(generics.ListAPIView):
     filter_backends = [OrderingFilter, DjangoFilterBackend]
     ordering_fields = ["date"]
     filterset_fields = ["course", "lesson", "payment_method"]
+
+
+class SubscriptionAPIView(views.APIView):
+
+    def post(self, request, course_id):
+        user = request.user
+        try:
+            course = Course.objects.filter(id=course_id).get()
+        except ObjectDoesNotExist:
+            return Response({"message": "Объект курса не найден"})
+        subs = Subscription.objects.filter(user=user, course=course)
+        if subs.exists():
+            subs.delete()
+            return Response({"message": "Объект подписки успешно удален"})
+        else:
+            subs = Subscription.objects.create(user=user, course=course)
+            return JsonResponse(SubscriptionSerializer(subs).data)

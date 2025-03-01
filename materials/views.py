@@ -4,9 +4,9 @@ from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsModerator
 
 from .models import Course, Lesson
+from .pagination import CustomPagination
 from .permissions import IsOwner
 from .serializers import CourseSerializer, LessonSerializer
-from .pagination import CustomPagination
 
 
 class CourseViewSet(viewsets.ModelViewSet):

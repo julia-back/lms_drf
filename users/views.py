@@ -1,12 +1,11 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
-from django.shortcuts import get_object_or_404
-from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import generics
-from rest_framework import views
+from rest_framework import generics, views
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+
 from materials.models import Course
 
 from .models import CustomUser, Payment, Subscription

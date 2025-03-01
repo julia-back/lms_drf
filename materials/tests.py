@@ -1,8 +1,10 @@
 from django.urls import reverse
-from rest_framework.test import APITestCase
 from rest_framework import status
-from .models import Lesson
+from rest_framework.test import APITestCase
+
 from users.models import CustomUser
+
+from .models import Lesson
 
 
 class LessonTestCase(APITestCase):

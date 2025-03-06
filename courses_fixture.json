@@ -5,7 +5,9 @@
     "fields": {
         "name": "Курс выживания",
         "img": "img_course/Без_имени.png",
-        "description": "Выживание для чайников"
+        "description": "Выживание для чайников",
+        "price": "100.00",
+        "owner": 3
     }
 },
 {
@@ -14,7 +16,9 @@
     "fields": {
         "name": "Курс рукоделия",
         "img": "img_course/Без_имени_OIFbnTo.png",
-        "description": "Шьем, вяжем, вышиваем"
+        "description": "Шьем, вяжем, вышиваем",
+        "price": "150.00",
+        "owner": 2
     }
 }
 ]

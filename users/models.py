@@ -29,7 +29,7 @@ class Payment(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True)
     amount = models.DecimalField(max_digits=11, decimal_places=2)
     payment_method = models.CharField(choices=PAYMENT_METHOD)
-    payment_link = models.URLField(default=None, blank=True, null=True)
+    payment_link = models.URLField(max_length=1000, default=None, blank=True, null=True)
 
     def __str__(self):
         return f"{self.amount} - {self.course if self.course else self.lesson}, {self.user}"

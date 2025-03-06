@@ -10,7 +10,7 @@ from materials.models import Course
 
 from .models import CustomUser, Payment, Subscription
 from .permissions import IsCurrentUser
-from .services import get_payment_link
+from .services import PaymentLink
 from .serializers import (CustomUserPrivateSerializer, CustomUserPublicSerializer, CustomUserRegisterSerializer,
                           PaymentCreateSerializer, PaymentListSerializer, SubscriptionSerializer)
 
@@ -57,7 +57,7 @@ class PaymentCreateAPIView(generics.CreateAPIView):
         if data.get("payment_method") == "cash":
             payment_link = None
         else:
-            payment_link = get_payment_link(user=user, product=product, amount=amount)
+            payment_link = PaymentLink(user_obj=user, product_obj=product).get_payment_link()
         serializer.save(user=user, amount=amount, payment_link=payment_link)
 
 

@@ -18,6 +18,7 @@ urlpatterns = [
     path("user_update/<int:pk>/", views.CustomUserUpdateAPIview.as_view(), name="user_update"),
     path("user_delete/<int:pk>/", views.CustomUserDestroyApIView.as_view(), name="user_delete"),
 
+    path("payment_create/", views.PaymentCreateAPIView.as_view(), name="payment_create"),
     path("payment_list/", views.PaymentListAPIView.as_view(), name="payment_list"),
 
     path("subscription/<int:course_id>/", views.SubscriptionAPIView.as_view(), name="subscription"),

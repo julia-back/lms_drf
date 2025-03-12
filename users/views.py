@@ -10,8 +10,9 @@ from materials.models import Course
 
 from .models import CustomUser, Payment, Subscription
 from .permissions import IsCurrentUser
+from .services import PaymentLink
 from .serializers import (CustomUserPrivateSerializer, CustomUserPublicSerializer, CustomUserRegisterSerializer,
-                          PaymentSerializer, SubscriptionSerializer)
+                          PaymentCreateSerializer, PaymentListSerializer, SubscriptionSerializer)
 
 
 class CustomUserRegisterAPIView(generics.CreateAPIView):
@@ -41,12 +42,28 @@ class CustomUserUpdateAPIview(generics.UpdateAPIView):
 
 class CustomUserDestroyApIView(generics.DestroyAPIView):
     queryset = CustomUser.objects.all()
+    serializer_class = CustomUserPublicSerializer
     permission_classes = [IsCurrentUser]
+
+
+class PaymentCreateAPIView(generics.CreateAPIView):
+    serializer_class = PaymentCreateSerializer
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        data = serializer.validated_data
+        product = data.get("course") if data.get("course") else data.get("lesson")
+        amount = product.price
+        if data.get("payment_method") == "cash":
+            payment_link = None
+        else:
+            payment_link = PaymentLink(user_obj=user, product_obj=product).get_payment_link()
+        serializer.save(user=user, amount=amount, payment_link=payment_link)
 
 
 class PaymentListAPIView(generics.ListAPIView):
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
+    serializer_class = PaymentListSerializer
     permission_classes = [IsAuthenticated, IsCurrentUser]
     filter_backends = [OrderingFilter, DjangoFilterBackend]
     ordering_fields = ["date"]

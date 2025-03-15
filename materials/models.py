@@ -1,6 +1,7 @@
 from django.db import models
 
 from config.settings import AUTH_USER_MODEL
+from datetime import datetime
 
 
 class Course(models.Model):
@@ -10,6 +11,7 @@ class Course(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=11, decimal_places=2, default=0)
     owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    updated_at = models.DateTimeField()
 
     def __str__(self):
         return self.name

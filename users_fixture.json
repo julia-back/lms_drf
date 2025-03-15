@@ -1,0 +1,90 @@
+[
+{
+    "model": "users.customuser",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$gn37BeeV5eJsQ3ijhX9gtI$bfeG2jYlt66s2+mHbmEdXeobbxbuueIR5vVq17WAPAA=",
+        "last_login": "2025-02-16T08:14:17Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-02-16T08:12:04Z",
+        "email": "admin@admin.ru",
+        "phone_number": null,
+        "country": null,
+        "avatar": "",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$5P8vMwU9O55r7HPfORlbCH$6HRDKy5a8DlLlUcjjh2zAcgOT5+JUDN1adSaPeAoJig=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user_1",
+        "first_name": "User_1",
+        "last_name": "User_11",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-02-16T09:34:32Z",
+        "email": "user_1@user.com",
+        "phone_number": null,
+        "country": null,
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 3,
+    "fields": {
+        "password": "1234",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user_2",
+        "first_name": "User_2",
+        "last_name": "User_22",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-02-16T09:37:34Z",
+        "email": "user_2@user.com",
+        "phone_number": null,
+        "country": null,
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 14,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$2k2xW0JomgPcplWx0vZBny$cSrgvNZSak03S+SFghIdCKITklP1Qmbloq3QmTuyQhE=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user_moder",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-02-21T06:47:56Z",
+        "email": "user_moder@user.com",
+        "phone_number": null,
+        "country": null,
+        "avatar": "",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+}
+]

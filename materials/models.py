@@ -1,10 +1,10 @@
 from django.db import models
 
 from config.settings import AUTH_USER_MODEL
-from datetime import datetime
 
 
 class Course(models.Model):
+    """Модель курса. Связана с моделью пользователя через внешний ключ."""
 
     name = models.CharField(max_length=250)
     img = models.ImageField(upload_to="img_course/", blank=True, null=True)
@@ -22,6 +22,7 @@ class Course(models.Model):
 
 
 class Lesson(models.Model):
+    """Модель урока. Связана с моделью курса и моделью пользователя через внешний ключ."""
 
     name = models.CharField(max_length=250)
     img = models.ImageField(upload_to="img_lesson/", blank=True, null=True)

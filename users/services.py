@@ -1,8 +1,13 @@
 import requests
+
 from config.settings import PAYMENT_STRIPE_API_KEY
 
 
 class PaymentLink:
+    """
+    Класс реализации интеграции с API для получения сслыки на
+    оплату для дальнейшего предоставления ее пользовователю.
+    """
 
     def __init__(self, product_obj, user_obj=None):
         self.user_obj = user_obj
@@ -11,6 +16,8 @@ class PaymentLink:
         self.headers = {"Authorization": f"Bearer {self.api_token}"}
 
     def get_payment_link(self):
+        """Метод получения ссылки на оплату."""
+
         if self.user_obj:
             customer_id = self.create_customer()
         else:
@@ -21,6 +28,8 @@ class PaymentLink:
         return payment_link
 
     def create_customer(self):
+        """Метод создания клиента. Вызывается методом получения ссылки на оплату."""
+
         url = "https://api.stripe.com/v1/customers"
         data = {"email": self.user_obj.email, "name": self.user_obj.username, "phone": self.user_obj.phone_number}
         response = requests.post(url, headers=self.headers, data=data)
@@ -28,6 +37,8 @@ class PaymentLink:
         return customer_id
 
     def create_product(self):
+        """Метод создания продукта. Вызывается методом получения ссылки на оплату."""
+
         url = "https://api.stripe.com/v1/products"
         data = {"name": self.product_obj.name, "description": self.product_obj.description}
         response = requests.post(url, headers=self.headers, data=data)
@@ -35,6 +46,8 @@ class PaymentLink:
         return product_id
 
     def create_price(self, product_id):
+        """Метод создания цены. Вызывается методом получения ссылки на оплату."""
+
         url = "https://api.stripe.com/v1/prices"
         data = {"currency": "usd", "product": product_id, "unit_amount": int(self.product_obj.price * 100)}
         response = requests.post(url, headers=self.headers, data=data)
@@ -42,6 +55,8 @@ class PaymentLink:
         return price_id
 
     def create_payment_session(self, price_id, customer_id=None):
+        """Метод создания сессии оплаты. Вызывается методом получения ссылки на оплату."""
+
         url = "https://api.stripe.com/v1/checkout/sessions"
         data = {"customer": customer_id,
                 "line_items[0][price]": price_id,
@@ -51,34 +66,3 @@ class PaymentLink:
         response = requests.post(url, headers=self.headers, data=data)
         payment_link = response.json().get("url")
         return payment_link
-
-
-def get_payment_link(user=None, product=None):
-    # проверка наличия пользователя
-    # создание пользователя
-    url = "https://api.stripe.com/v1/customers"
-    headers = {"Authorization": f"Bearer {PAYMENT_STRIPE_API_KEY}"}
-    data = {"email": user.email, "name": user.username, "phone": user.phone_number}
-    response = requests.post(url, headers=headers, data=data)
-    ret_user = response.json().get("id")
-    # создание продукта
-    url = "https://api.stripe.com/v1/products"
-    data = {"name": product.name, "description": product.description}
-    response = requests.post(url, headers=headers, data=data)
-    ret_product = response.json().get("id")
-    # создание цены
-    url = "https://api.stripe.com/v1/prices"
-    data = {"currency": "usd", "product": ret_product, "unit_amount": int(product.price * 100)}
-    response = requests.post(url, headers=headers, data=data)
-    ret_price = response.json().get("id")
-    # создание сессии
-    url = "https://api.stripe.com/v1/checkout/sessions"
-    data = {"customer": ret_user,
-            "line_items[0][price]": ret_price,
-            "line_items[0][quantity]": 1,
-            "mode": "payment",
-            "success_url": "https://example.com/success"}
-    response = requests.post(url, headers=headers, data=data)
-    ret_session = response.json().get("url")
-    # получение ссылки на оплату
-    return ret_session

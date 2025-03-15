@@ -5,6 +5,10 @@ from materials.models import Course, Lesson
 
 
 class CustomUser(AbstractUser):
+    """
+    Кастомная модель пользователя. Устанавливает email как поля для авторизации. Поле username также
+    остается обязательным. Также устанавливает дополнительные необязательные поля.
+    """
 
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
@@ -19,6 +23,10 @@ class CustomUser(AbstractUser):
 
 
 class Payment(models.Model):
+    """
+    Модель платежа. Связана с моделью пользователя через внешний ключ.
+    Связана с моделью у курса или с моделю урока на выбор.
+    """
 
     PAYMENT_METHOD = [("cash", "Наличные"),
                       ("remittance", "Перевод на счет")]
@@ -40,6 +48,8 @@ class Payment(models.Model):
 
 
 class Subscription(models.Model):
+    """Модель подписки. Связана с моделью пользователя и моделью курса."""
+
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 

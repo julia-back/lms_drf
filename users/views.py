@@ -10,46 +10,79 @@ from materials.models import Course
 
 from .models import CustomUser, Payment, Subscription
 from .permissions import IsCurrentUser
-from .services import PaymentLink
 from .serializers import (CustomUserPrivateSerializer, CustomUserPublicSerializer, CustomUserRegisterSerializer,
                           PaymentCreateSerializer, PaymentListSerializer, SubscriptionSerializer)
+from .services import PaymentLink
 
 
 class CustomUserRegisterAPIView(generics.CreateAPIView):
+    """Представление для регистрации / создания модели пользователя."""
+
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserRegisterSerializer
 
 
 class CustomUserListAPIView(generics.ListAPIView):
+    """Представление для получения списка объектов моледи пользователя."""
+
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserPublicSerializer
 
 
 class CustomUserRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    Представление для просмотра объекта модели пользователя. Использует
+    сериализатор в зависимости от того, запрашивает ли текущий авторизованный
+    пользователь свою модель пользователя.
+    """
+
     queryset = CustomUser.objects.all()
 
     def get_serializer_class(self):
+        """
+        Переопределенный метод получения сериализатора. Возвращает сериализатор
+        в зависимости от того, запрашивает ли текущий авторизованный пользователь
+        свою модель пользователя.
+        """
+
         if self.request.user == self.get_object():
             return CustomUserPrivateSerializer
         return CustomUserPublicSerializer
 
 
 class CustomUserUpdateAPIview(generics.UpdateAPIView):
+    """
+    Представление для обновления модели пользователя. Доступно текущему
+    авторизованному пользователю, запрашивающему свою модель пользователя.
+    """
+
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserPrivateSerializer
     permission_classes = [IsCurrentUser]
 
 
 class CustomUserDestroyApIView(generics.DestroyAPIView):
+    """
+    Представление для удаления модели пользователя. Доступно текущему
+    авторизованному пользователю, запрашивающему свою модель пользователя.
+    """
+
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserPublicSerializer
     permission_classes = [IsCurrentUser]
 
 
 class PaymentCreateAPIView(generics.CreateAPIView):
+    """Представление для создания объекта модели платежа. """
+
     serializer_class = PaymentCreateSerializer
 
     def perform_create(self, serializer):
+        """
+        Переопределнный метод создания объекта модели платежа.
+        В ответе содержит ссылку на оплату.
+        """
+
         user = self.request.user
         data = serializer.validated_data
         product = data.get("course") if data.get("course") else data.get("lesson")
@@ -62,6 +95,8 @@ class PaymentCreateAPIView(generics.CreateAPIView):
 
 
 class PaymentListAPIView(generics.ListAPIView):
+    """Представление для получения списка объектов модели платежа."""
+
     queryset = Payment.objects.all()
     serializer_class = PaymentListSerializer
     permission_classes = [IsAuthenticated, IsCurrentUser]
@@ -71,8 +106,11 @@ class PaymentListAPIView(generics.ListAPIView):
 
 
 class SubscriptionAPIView(views.APIView):
+    """Представление для создания и удаления объекта модели подписки."""
 
     def post(self, request, course_id):
+        """Метод создания подписки, если ее нет, и удаления подписки, если она есть."""
+
         user = request.user
         try:
             course = Course.objects.filter(id=course_id).get()

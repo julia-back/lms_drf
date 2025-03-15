@@ -2,7 +2,7 @@ from rest_framework.serializers import ValidationError
 
 
 class YoutubeLinkValidator:
-
+    """Валидатор для проверки источника ссылки. Допустимый источник - youtube.com"""
     def __init__(self, field=None):
         self.field = field
 

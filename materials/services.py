@@ -1,6 +1,8 @@
-from .models import Course, Lesson
 from datetime import timedelta
+
 from django.utils import timezone
+
+from .models import Course, Lesson
 
 
 def is_difference_updated_at_more_4_hours(course_id=None, lesson_id=None):

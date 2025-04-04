@@ -22,6 +22,22 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  redis:
+    image: redis
+    command: ["redis-server"]
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6379:6379
+
+  celery:
+    build: .
+    command: poetry run celery -A config worker -l INFO
+
+  celery-beat:
+    build: .
+    command: poetry run celery -A config beat -l INFO
+
 
 networks:
   default:
@@ -29,3 +45,4 @@ networks:
 
 volumes:
   postgres_data:
+  redis-data:

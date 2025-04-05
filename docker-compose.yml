@@ -6,7 +6,7 @@ services:
     build: .
     env_file:
       - .env
-    command: poetry run python manage.py runserver 0.0.0.0:8000
+    command: sh -c "poetry run python manage.py migrate && poetry run python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
@@ -18,9 +18,38 @@ services:
     image: postgres:17.4
     env_file:
       - .env
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    expose:
+      - 6379
+
+  celery:
+    build: .
+    env_file:
+      - .env
+    command: poetry run celery -A config worker -l INFO
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - db
+      - web
+
+
+  celery-beat:
+    build: .
+    command: poetry run celery -A config beat -l INFO
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - db
+      - web
+    env_file:
+      - .env
 
 
 networks:
@@ -29,3 +58,4 @@ networks:
 
 volumes:
   postgres_data:
+  redis-data:

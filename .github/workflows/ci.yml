@@ -22,7 +22,7 @@ jobs:
           poetry install --no-root
 
       - name: Run migrations
-        run: poetry python manage.py migrate
+        run: poetry run python manage.py migrate
 
       - name: Run tests
-        run: poetry python manage.py test
+        run: poetry run python manage.py test

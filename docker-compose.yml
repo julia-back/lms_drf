@@ -9,8 +9,8 @@ services:
     command: sh -c "poetry run python manage.py migrate && poetry run python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     depends_on:
       - db
 
@@ -50,6 +50,14 @@ services:
       - web
     env_file:
       - .env
+
+
+  nginx:
+    build: ./nginx/
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
 
 
 networks:

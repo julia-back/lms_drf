@@ -6,6 +6,16 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:17.4
+        env:
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        ports:
+          - 5432:5432
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -27,7 +37,6 @@ jobs:
           NAME: ${{ secrets.DB_NAME }}
           USER: ${{ secrets.DB_USER }}
           PASSWORD: ${{ secrets.DB_PASSWORD }}
-          HOST: db
         run: poetry run python manage.py migrate
 
       - name: Run tests

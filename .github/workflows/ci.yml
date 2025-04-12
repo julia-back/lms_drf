@@ -46,6 +46,7 @@ jobs:
           USER: ${{ secrets.DB_USER }}
           PASSWORD: ${{ secrets.DB_PASSWORD }}
           HOST: localhost
+          PORT: 5432
         run: poetry run python manage.py migrate
 
       - name: Run tests

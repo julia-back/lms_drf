@@ -6,6 +6,14 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -21,9 +29,31 @@ jobs:
           pip install poetry
           poetry install --no-root
 
+      - name: Create database
+        env:
+          USER: ${{ secrets.DB_USER }}
+          PASSWORD: ${{ secrets.DB_PASSWORD }}
+          HOST: localhost
+          DB_NAME: ${{ secrets.DB_NAME }}
+        run: |
+          import psycopg2
+          from psycopg2 import sql
+          conn = psycopg2.connect(dbname='postgres', user='$USER', password='$PASSWORD', host='$HOST')
+          conn.autocommit = True
+          cur = conn.cursor()
+          cur.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier('$DB_NAME')))
+          cur.close()
+          conn.close()
+          
+
+
       - name: Run migrations
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          NAME: ${{ secrets.DB_NAME }}
+          USER: ${{ secrets.DB_USER }}
+          PASSWORD: ${{ secrets.DB_PASSWORD }}
+          HOST: ${{ secrets.DB_HOST }}
         run: poetry run python manage.py migrate
 
       - name: Run tests

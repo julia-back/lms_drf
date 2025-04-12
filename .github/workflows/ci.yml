@@ -24,7 +24,16 @@ jobs:
       - name: Run migrations
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          NAME: ${{ secrets.DB_NAME }}
+          USER: ${{ secrets.DB_USER }}
+          PASSWORD: ${{ secrets.DB_PASSWORD }}
+          HOST: ${{ secrets.DB_HOST }}
         run: poetry run python manage.py migrate
 
       - name: Run tests
+        env:
+          NAME: ${{ secrets.DB_NAME }}
+          USER: ${{ secrets.DB_USER }}
+          PASSWORD: ${{ secrets.DB_PASSWORD }}
+          HOST: ${{ secrets.DB_HOST }}
         run: poetry run python manage.py test

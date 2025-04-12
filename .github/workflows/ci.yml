@@ -31,7 +31,9 @@ jobs:
           pip install poetry
           poetry install --no-root
 
-
+      - name: Start database server
+        run:
+          sudo systemctl start postgresql
 
       - name: Run migrations
         env:

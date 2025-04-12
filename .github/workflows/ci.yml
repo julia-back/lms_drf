@@ -8,7 +8,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:latest
+        image: postgres:17.4
         env:
           POSTGRES_DB: ${{ secrets.DB_NAME }}
           POSTGRES_USER: ${{ secrets.DB_USER }}

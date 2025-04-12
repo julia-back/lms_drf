@@ -10,7 +10,7 @@ jobs:
       postgres:
         image: postgres:17.4
         env:
-          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_DB: test_db
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
@@ -42,7 +42,7 @@ jobs:
       - name: Run migrations
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          NAME: ${{ secrets.DB_NAME }}
+          NAME: test_db
           USER: ${{ secrets.DB_USER }}
           PASSWORD: ${{ secrets.DB_PASSWORD }}
           HOST: localhost

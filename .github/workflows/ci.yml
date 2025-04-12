@@ -45,6 +45,7 @@ jobs:
           NAME: ${{ secrets.DB_NAME }}
           USER: ${{ secrets.DB_USER }}
           PASSWORD: ${{ secrets.DB_PASSWORD }}
+          HOST: localhost
         run: poetry run python manage.py migrate
 
       - name: Run tests

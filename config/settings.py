@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -145,3 +146,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CORS_ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8000"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://localhost:8000"]
 CORS_ALLOW_ALL_ORIGINS = False
+
+if "test" in sys.argv:
+    SECRET_KEY = secrets.SECRET_KEY

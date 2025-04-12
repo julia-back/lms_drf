@@ -36,6 +36,7 @@ jobs:
           HOST: localhost
           DB_NAME: ${{ secrets.DB_NAME }}
         run: |
+          python -c "
           import psycopg2
           from psycopg2 import sql
           conn = psycopg2.connect(dbname='postgres', user='$USER', password='$PASSWORD', host='$HOST')
@@ -43,9 +44,7 @@ jobs:
           cur = conn.cursor()
           cur.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier('$DB_NAME')))
           cur.close()
-          conn.close()
-          
-
+          conn.close()"
 
       - name: Run migrations
         env:

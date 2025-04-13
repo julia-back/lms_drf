@@ -9,6 +9,10 @@ jobs:
     services:
       postgres:
         image: postgres:17.4
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
     steps:
       - name: Check out code

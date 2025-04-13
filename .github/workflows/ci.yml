@@ -5,14 +5,15 @@ on: [push]
 jobs:
   tests:
     runs-on: ubuntu-latest
-    container: python:3.12
-    services:
-      postgres:
-        image: postgres:17.4
 
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
@@ -21,9 +22,6 @@ jobs:
           poetry install --no-root
 
       - name: Run tests
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          POSTGRES_HOST: postgres
         run: poetry run python manage.py test
 
   build:

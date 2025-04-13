@@ -150,7 +150,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 if "test" in sys.argv:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': "test_db_lms",
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': "test_db_lms.sqlite3",
         }
     }

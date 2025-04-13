@@ -147,4 +147,10 @@ CORS_ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8000"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://localhost:8000"]
 CORS_ALLOW_ALL_ORIGINS = False
 
-
+if "test" in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': "test_db_lms",
+        }
+    }

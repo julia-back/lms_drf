@@ -24,7 +24,7 @@ jobs:
       - name: Run tests
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: poetry run python manage.py test
+        run: poetry run python manage.py test --keepdb -v 3
 
   build:
     needs: test

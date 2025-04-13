@@ -147,14 +147,14 @@ CORS_ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8000"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://localhost:8000"]
 CORS_ALLOW_ALL_ORIGINS = False
 
-if "test" in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'test_db',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
-    }
+# if "test" in sys.argv:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': 'test_db',
+#             'USER': 'postgres',
+#             'PASSWORD': 'postgres',
+#             'HOST': 'localhost',
+#             'PORT': '5432',
+#         }
+#     }

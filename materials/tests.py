@@ -4,16 +4,18 @@ from rest_framework.test import APITestCase
 
 from users.models import CustomUser
 
-from .models import Lesson
+from .models import Lesson, Course
 
 
 class LessonTestCase(APITestCase):
 
     def setUp(self):
         self.user = CustomUser.objects.create(email="test@test.com")
+        self.course = Course.objects.create(name="course_1", description="course_description_1")
         self.lesson_1 = Lesson.objects.create(name="lesson_1", description="description_1",
-                                              owner=self.user)
-        self.lesson_2 = Lesson.objects.create(name="lesson_2", description="description_2")
+                                              owner=self.user, course=self.course)
+        self.lesson_2 = Lesson.objects.create(name="lesson_2", description="description_2",
+                                              course=self.course)
 
     def test_lesson_list_no_authenticated(self):
         url = reverse("materials:lesson_list")
@@ -29,18 +31,21 @@ class LessonTestCase(APITestCase):
                            'results': [
                                {'id': self.lesson_1.id,
                                 'name': self.lesson_1.name,
-                                'img': self.lesson_1.img,
+                                'img': self.lesson_2.img,
                                 'description': self.lesson_1.description,
                                 'video_link': self.lesson_1.video_link,
-                                'course': self.lesson_1.course,
-                                'owner': self.lesson_1.owner.pk},
+                                'course': self.lesson_1.course.pk,
+                                'owner': self.lesson_1.owner.pk,
+                                'price': '0.00'},
+
                                {'id': self.lesson_2.id,
                                 'name': self.lesson_2.name,
                                 'img': self.lesson_2.img,
                                 'description': self.lesson_2.description,
                                 'video_link': self.lesson_2.video_link,
-                                'course': self.lesson_2.course,
-                                'owner': self.lesson_2.owner}]}
+                                'course': self.lesson_2.course.pk,
+                                'owner': self.lesson_2.owner,
+                                'price': '0.00'}]}
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, expected_result)
 
@@ -101,8 +106,9 @@ class LessonTestCase(APITestCase):
                            'img': self.lesson_1.img,
                            'description': data_to_update.get("description"),
                            'video_link': self.lesson_1.video_link,
-                           'course': self.lesson_1.course,
-                           'owner': self.lesson_1.owner.pk}
+                           'course': self.lesson_1.course.pk,
+                           'owner': self.lesson_1.owner.pk,
+                           'price': '0.00'}
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, expected_result)
 
@@ -130,7 +136,8 @@ class LessonTestCase(APITestCase):
                            'img': self.lesson_1.img,
                            'description': self.lesson_1.description,
                            'video_link': self.lesson_1.video_link,
-                           'course': self.lesson_1.course,
+                           'course': self.lesson_1.course.pk,
+                           'price': '0.00',
                            'owner': self.lesson_1.owner.pk}
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, expected_result)

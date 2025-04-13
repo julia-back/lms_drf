@@ -6,6 +6,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:17.4
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+
+
+
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -23,6 +36,7 @@ jobs:
 
       - name: Run tests
         env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: poetry run python manage.py test --keepdb -v 3
 

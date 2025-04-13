@@ -152,9 +152,5 @@ if "test" in sys.argv:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': "test_db_lms",
-            'USER': os.getenv("DB_USER"),
-            'PASSWORD': os.getenv("DB_PASSWORD"),
-            'HOST': "localhost",
-            'PORT': "5432",
         }
     }

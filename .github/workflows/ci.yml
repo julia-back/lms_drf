@@ -23,7 +23,7 @@ jobs:
       - name: Run tests
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          NAME: test_db_lms
+          POSTGRES_NAME: test_db_lms
         run: poetry run python manage.py test
 
   build:

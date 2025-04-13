@@ -146,3 +146,15 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CORS_ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8000"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost", "http://localhost:8000"]
 CORS_ALLOW_ALL_ORIGINS = False
+
+if "test" in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': "test_db_lms",
+            'USER': os.getenv("DB_USER"),
+            'PASSWORD': os.getenv("DB_PASSWORD"),
+            'HOST': "postgres",
+            'PORT': "5432",
+        }
+    }

@@ -154,7 +154,7 @@ if "test" in sys.argv:
             'NAME': "test_db_lms",
             'USER': os.getenv("DB_USER"),
             'PASSWORD': os.getenv("DB_PASSWORD"),
-            'HOST': "postgres",
+            'HOST': "localhost",
             'PORT': "5432",
         }
     }

@@ -23,8 +23,7 @@ jobs:
       - name: Run tests
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          POSTGRES_HOST: postgres
-          POSTGRES_PORT: 5432
+          NAME: test_db_lms
         run: poetry run python manage.py test
 
   build:

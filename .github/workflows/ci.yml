@@ -23,7 +23,7 @@ jobs:
       - name: Run tests
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          POSTGRES_USER: postgres
+          POSTGRES_HOST: postgres
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: poetry run python manage.py test
 

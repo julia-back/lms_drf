@@ -26,13 +26,7 @@ jobs:
           pip install poetry
           poetry install --no-root
 
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          until pg_isready -h ${{ postgres }} -U ${{ secrets.DB_USER }}; 
-          do
-            echo "Waiting for PostgreSQL..."
-            sleep 2
-          done
+
 
       - name: Run migrations
         env:

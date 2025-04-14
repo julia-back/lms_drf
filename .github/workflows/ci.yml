@@ -68,8 +68,8 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           sudo systemctl start docker
-          sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
-          sudo docker stop myapp || true
-          sudo docker rm myapp || true
-          sudo docker run -d --name myapp -p 80:80 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+          sudo docker compose pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+          sudo docker compose stop myapp || true
+          sudo docker compose rm myapp || true
+          sudo docker compose up -d --name myapp -p 80:80 --build ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
           EOF

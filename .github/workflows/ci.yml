@@ -67,8 +67,8 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Copy .env to server
-        run: scp -o StrictHostKeyChecking=no .env ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/
+      - name: Create .env on server
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "echo '${{ secrets.ENV_FILE_CONTENTS }}' > ~/app/.env"
 
       - name: Deploy to server
         run: |

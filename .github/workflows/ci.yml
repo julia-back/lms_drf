@@ -68,7 +68,8 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
       - name: Create .env on server
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} \
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} \
           "echo '${{ secrets.ENV_FILE_CONTENTS }}' | base64 -d > ~/app/.env"
 
       - name: Copy docker-compose.yml to server

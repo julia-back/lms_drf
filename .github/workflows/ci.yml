@@ -77,5 +77,5 @@ jobs:
           echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
           sudo docker compose pull
           sudo docker compose down || true
-          sudo docker compose up -d ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+          sudo docker compose up -d
           EOF

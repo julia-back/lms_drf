@@ -68,7 +68,9 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
       - name: Create .env on server
-        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "echo '${{ secrets.ENV_FILE_CONTENTS }}' > ~/app/.env"
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 
+          echo '${{ secrets.ENV_FILE_CONTENTS }}' > ~/app/.env
 
       - name: Copy docker-compose.yml to server
         run: scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/
@@ -78,7 +80,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           cd ~/app
           echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-          docker compose pull
-          docker compose down || true
-          docker compose up -d
+          sudo docker compose pull
+          sudo docker compose down || true
+          sudo docker compose up -d ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
           EOF

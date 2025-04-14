@@ -69,8 +69,9 @@ jobs:
 
       - name: Create .env on server
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} \
-          "echo '${{ secrets.ENV_FILE_CONTENTS }} | base64 -d > ~/app/.env"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          echo "${{ secrets.ENV_FILE_CONTENTS }}" | base64 -d > ~/app/.env
+          EOF
 
       - name: Copy docker-compose.yml to server
         run: scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/
